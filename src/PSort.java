@@ -27,33 +27,35 @@ public class PSort extends RecursiveAction {
             for (int i = begin + 1; i < end; i++) {
                 int j = i;
                 while (j > 0 && A[j] < A[j - 1]) {
-                    swap(A, j, j -1);
+                    swap(A, j, j - 1);
                     j--;
                 }
             }
-        } else if (begin != end) {
+        } else {
             int mid = partition(A, begin, end);
-            if (begin != mid && end != mid) {
-                PSort left = new PSort(A, begin, mid);
-                left.fork();
-                PSort right = new PSort(A, mid, end);
-                right.compute();
-                left.join();
-            }
+            PSort left = new PSort(A, begin, mid);
+            left.fork();
+            PSort right = new PSort(A, mid, end);
+            right.compute();
+            left.join();
         }
     }
 
     private int partition(int [] A, int begin, int end) {
+        int i = begin, j = end - 1;
         int pivot = A[(begin + end) / 2];
-        int pivot_index = begin;
-        for (int i = begin; i < end; i++) {
-            if (A[i] < pivot) {
-                swap(A, i, pivot_index);
-                pivot_index++;
+        while (i <= j) {
+            while (A[i] < pivot)
+                i++;
+            while (A[j] > pivot)
+                j--;
+            if (i <= j) {
+                swap(A, i, j);
+                i++;
+                j--;
             }
         }
-        swap(A, pivot_index, end - 1);
-        return pivot_index;
+        return i;
     }
 
     private void swap(int[] A, int first, int second) {
