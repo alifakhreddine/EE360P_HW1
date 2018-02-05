@@ -31,15 +31,16 @@ public class PSort extends RecursiveAction {
                     j--;
                 }
             }
-        } else if (begin != end){
+        } else if (begin != end) {
             int mid = partition(A, begin, end);
-            PSort left = new PSort(A, begin, mid);
-            left.fork();
-            PSort right = new PSort(A, mid, end);
-            right.compute();
-            left.join();
+            if (begin != mid && end != mid) {
+                PSort left = new PSort(A, begin, mid);
+                left.fork();
+                PSort right = new PSort(A, mid, end);
+                right.compute();
+                left.join();
+            }
         }
-
     }
 
     private int partition(int [] A, int begin, int end) {
