@@ -1,9 +1,15 @@
-//UT-EID=
+/*
+ * Ali Fakhreddine
+ * amf3498
+ *
+ * Ryo Yoshida
+ * ry3583
+ *
+ */
 
 
 import java.util.*;
 import java.util.concurrent.*;
-
 
 public class PMerge implements Runnable {
     private int[] A;
@@ -11,7 +17,6 @@ public class PMerge implements Runnable {
     private int[] C;
     private int num;
     private boolean isA;
-
 
     public PMerge(int[] A, int[] B, int[] C, int num, boolean isA) {
         this.A = A;

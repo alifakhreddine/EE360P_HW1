@@ -1,4 +1,11 @@
-//UT-EID=
+/*
+ * Ali Fakhreddine
+ * amf3498
+ *
+ * Ryo Yoshida
+ * ry3583
+ *
+ */
 
 
 import java.util.*;
@@ -42,20 +49,23 @@ public class PSort extends RecursiveAction {
     }
 
     private int partition(int [] A, int begin, int end) {
-        int i = begin, j = end - 1;
+        int l = begin;
+        int r = end - 1;
         int pivot = A[(begin + end) / 2];
-        while (i <= j) {
-            while (A[i] < pivot)
-                i++;
-            while (A[j] > pivot)
-                j--;
-            if (i <= j) {
-                swap(A, i, j);
-                i++;
-                j--;
+        while (l <= r) {
+            while (A[l] < pivot) {
+                l++;
+            }
+            while (A[r] > pivot) {
+                r--;
+            }
+            if (l <= r) {
+                swap(A, l, r);
+                l ++;
+                r --;
             }
         }
-        return i;
+        return l;
     }
 
     private void swap(int[] A, int first, int second) {
