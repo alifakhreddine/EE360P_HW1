@@ -10,22 +10,24 @@ public class PMerge implements Runnable {
     private int[] B;
     private int[] C;
     private int num;
+    private boolean isA;
 
 
-    public PMerge(int[] A, int[] B, int[] C, int num) {
+    public PMerge(int[] A, int[] B, int[] C, int num, boolean isA) {
         this.A = A;
         this.B = B;
         this.C = C;
         this.num = num;
+        this.isA = isA;
     }
 
     public static void parallelMerge(int[] A, int[] B, int[]C, int numThreads) {
         ExecutorService threadPool = Executors.newFixedThreadPool(numThreads);
         for (int i = 0; i < A.length; i ++) {
-            threadPool.execute(new PMerge(A, B, C, A[i]));
+            threadPool.execute(new PMerge(A, B, C, A[i], true));
         }
         for (int i = 0; i < B.length; i ++) {
-            threadPool.execute(new PMerge(A, B, C, B[i]));
+            threadPool.execute(new PMerge(A, B, C, B[i], false));
         }
         threadPool.shutdown();
         try {
@@ -38,26 +40,16 @@ public class PMerge implements Runnable {
     @Override
     public void run()  {
         int count = 0;
-        //int i = 0;
         for (int i = 0; i < A.length; i++) {
             if (A[i] < num) {
                 count++;
             }
         }
         for (int j = 0; j < B.length; j++) {
-            if (B[j] < num) {
+            if (B[j] < num || (B[j] <= num && isA)) {
                 count++;
             }
         }
-//        while(A[i] < num && i < A.length) {
-//            count ++;
-//            i ++;
-//        }
-//        int j = 0;
-//        while(B[j] < num && j < B.length) {
-//            count ++;
-//            j ++;
-//        }
         C[count] = num;
     }
 }
